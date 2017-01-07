@@ -50,7 +50,7 @@
                     <a href="<?=base_url('admin/index/matkul_dosen')?>"><i class="fa fa-home"></i> Data Matkul Dosen</a>
                   </li>
                    <li>
-                    <a href="<?=base_url('admin/index/pertanyaan')?>"><i class="fa fa-home"></i> Data Jadwal</a>
+                    <a href="<?=base_url('admin/index/jadwal')?>"><i class="fa fa-home"></i> Data Jadwal</a>
                   </li>
                   <li>
                     <a href="<?=base_url('admin/index/')?>"><i class="fa fa-home"></i> Data Vote Matkul</a>

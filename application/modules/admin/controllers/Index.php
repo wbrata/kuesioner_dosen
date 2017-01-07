@@ -321,6 +321,36 @@ class Index extends MX_Controller {
 
          */
     }
+    function jadwal_kelas($kd_kelas = null){
+        // code of jadwal kelas
+        if ($kd_kelas != null) {
+            $data['tahun_ajaran'] = $this->Gmodel->rawQuery("SELECT * FROM tt_jadwal
+                                                                                                                INNER JOIN tt_kelas ON tt_kelas.kd_tt_kelas = tt_jadwal.kd_tt_kelas
+                                                                                                                INNER JOIN tt_matkul ON tt_matkul.kd_tt_matkul = tt_jadwal.kd_tt_matkul
+                                                                                                                LEFT JOIN tm_kelas ON tm_kelas.kd_kelas = tt_kelas.kd_kelas
+                                                                                                                LEFT JOIN tm_matkul ON tm_matkul.kd_matkul = tt_matkul.kd_matkul
+                                                                                                                WHERE sha1(tm_kelas.kd_kelas) = '".$kd_kelas."'
+                                                                                                                GROUP BY tt_matkul.tahun_ajaran");
+            $data['view'] = 'main_html_admin/content/tahun_ajaran_kelas';
+            $this->load->view('main_html_admin/content', $data);
+        }
+    }
+    function detail_matkul($kd_kelas = null, $tahun_ajaran = null){
+        if($kd_kelas != null && $tahun_ajaran != null){
+            $data['dataMatkul'] = $this->Gmodel->rawQuery("SELECT * FROM tt_jadwal
+                                                                                            INNER JOIN tt_kelas ON tt_kelas.kd_tt_kelas = tt_jadwal.kd_tt_kelas
+                                                                                            INNER JOIN tt_matkul ON tt_matkul.kd_tt_matkul = tt_jadwal.kd_tt_matkul
+                                                                                            INNER JOIN tm_dosen ON tm_dosen.kd_dosen = tt_matkul.kd_dosen
+                                                                                            LEFT JOIN tm_kelas ON tm_kelas.kd_kelas = tt_kelas.kd_kelas
+                                                                                            LEFT JOIN tm_matkul ON tm_matkul.kd_matkul = tt_matkul.kd_matkul
+                                                                                            WHERE sha1(tm_kelas.kd_kelas) = '".$kd_kelas."'
+                                                                                            AND sha1(tt_matkul.tahun_ajaran) = '".$tahun_ajaran."'");
+            $this->load->view('main_html_admin/content/detail_matkul', $data);
+        }
+    }
+    function tambah_tt_matkul(){
+
+    }
     function logout(){
         $this->session->sess_destroy();
         header('location:'.base_url('admin/login'));
