@@ -32,28 +32,28 @@
               <h3>&nbsp;</h3>
                 <ul class="nav side-menu">
                   <li>
-                    <a href="<?=base_url('admin/index/matkul')?>"><i class="fa fa-home"></i> Data Matkul</a>
+                    <a href="<?=base_url('admin/index/matkul')?>"><i class="fa fa-book"></i> Data Matkul</a>
                   </li>
                   <li>
-                    <a href="<?=base_url('admin/index/dosen')?>"><i class="fa fa-home"></i> Data Dosen</a>
+                    <a href="<?=base_url('admin/index/dosen')?>"><i class="fa fa-user"></i> Data Dosen</a>
                   </li>
                   <li>
-                    <a href="<?=base_url('admin/index/mahasiswa')?>"><i class="fa fa-home"></i> Data Mahasiswa</a>
+                    <a href="<?=base_url('admin/index/mahasiswa')?>"><i class="fa fa-users"></i> Data Mahasiswa</a>
                   </li>
                    <li>
-                    <a href="<?=base_url('admin/index/pertanyaan')?>"><i class="fa fa-home"></i> Data Pertanyaan</a>
+                    <a href="<?=base_url('admin/index/pertanyaan')?>"><i class="fa fa-question-circle-o"></i> Data Pertanyaan</a>
                   </li>
                    <li>
-                    <a href="<?=base_url('admin/index/kelas')?>"><i class="fa fa-home"></i> Data Kelas</a>
+                    <a href="<?=base_url('admin/index/kelas')?>"><i class="fa fa-building"></i> Data Kelas</a>
                   </li>
                    <li>
-                    <a href="<?=base_url('admin/index/matkul_dosen')?>"><i class="fa fa-home"></i> Data Matkul Dosen</a>
+                    <a href="<?=base_url('admin/index/matkul_dosen')?>"><i class="fa fa-sticky-note-o"></i> Data Matkul Dosen</a>
                   </li>
                    <li>
-                    <a href="<?=base_url('admin/index/jadwal')?>"><i class="fa fa-home"></i> Data Jadwal</a>
+                    <a href="<?=base_url('admin/index/jadwal')?>"><i class="fa fa-sticky-note"></i> Data Jadwal</a>
                   </li>
                   <li>
-                    <a href="<?=base_url('admin/index/')?>"><i class="fa fa-home"></i> Data Vote Matkul</a>
+                    <a href="<?=base_url('admin/index/laporan')?>"><i class="fa fa-bar-chart"></i> Data Vote Matkul</a>
                   </li>
                 </ul>
               </div>

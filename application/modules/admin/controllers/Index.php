@@ -356,8 +356,23 @@ class Index extends MX_Controller {
         $data['view'] = 'main_html_admin/content/kuesioner_result';
         $this->load->view('main_html_admin/content', $data);
     }
-    function do_dosen($kd_dosen){
-
+    function get_tahun_ajaran($kd_dosen){
+        $data['dataTahunAjaran'] = $this->Gmodel->rawQuery("  select * from tt_matkul
+                                                                                                    inner join tm_dosen on tm_dosen.kd_dosen = tt_matkul.kd_dosen
+                                                                                                    where tm_dosen.kd_dosen = '".$kd_dosen."'
+                                                                                                    group by tt_matkul.tahun_ajaran");
+            // $data['view'] = 'main_html_admin/content/tahun_ajar_dosen';
+            $this->load->view('main_html_admin/content/tahun_ajar_dosen', $data);
+    }
+    function detail_tahun_ajar($kd_dosen, $tahun_ajaran){
+        $data['detailTahunAjar'] = $this->Gmodel->rawQuery("select *,sum(nilai) as total from tt_rating
+                                                                                                inner join tt_matkul on tt_matkul.kd_tt_matkul = tt_rating.kd_tt_matkul
+                                                                                                inner join tm_matkul on tm_matkul.kd_matkul = tt_matkul.kd_matkul
+                                                                                                inner join tt_kelas on tt_kelas.kd_tt_kelas = tt_rating.kd_mahasiswa_kelas
+                                                                                                where tt_matkul.kd_dosen = '".$kd_dosen."'
+                                                                                                and tt_matkul.tahun_ajaran = '".$tahun_ajaran."'
+                                                                                                group by tt_kelas.kd_mahasiswa");
+        $this->load->view('main_html_admin/content/detail_matkul_result', $data);
     }
     function logout(){
         $this->session->sess_destroy();
