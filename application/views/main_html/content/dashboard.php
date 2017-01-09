@@ -28,11 +28,6 @@
                   <td><?=$row['nama_dosen']?></td>
                   <td>
                         <a href="<?=base_url('mahasiswa/index/pertanyaan')?>/<?=$row['kd_tt_matkul']?>/<?=$row['kd_tt_kelas']?>" class="btn btn-default btn-success">JAWAB PERTANYAAN</a>
-<!--                     <a href="#" class="btn btn-default btn-danger rate" id="buruk" onclick="vote('<?=$row['kd_tt_matkul']?>', '<?=$this->session->userdata("kd_mahasiswa")?>', '1', this)">Buruk</a>
-                    <a href="#" class="btn btn-default btn-warning rate" id="lumayan" onclick="vote('<?=$row['kd_tt_matkul']?>', '<?=$this->session->userdata("kd_mahasiswa")?>', '2', this)">Lumayan</a>
-                    <a href="#" class="btn btn-default rate" id="baik" onclick="vote('<?=$row['kd_tt_matkul']?>', '<?=$this->session->userdata("kd_mahasiswa")?>', '3', this)">Baik</a>
-                    <a href="#" class="btn btn-default btn-success rate" id="cukupbaik" onclick="vote('<?=$row['kd_tt_matkul']?>', '<?=$this->session->userdata("kd_mahasiswa")?>', '4', this)">Cukup Baik</a>
-                    <a href="#" class="btn btn-default btn-success rate" id="istimewa" onclick="vote('<?=$row['kd_tt_matkul']?>', '<?=$this->session->userdata("kd_mahasiswa")?>', '5', this)">Istimewa</a> -->
                   </td>
                 </tr>
                 <?php $nomor++; ?>

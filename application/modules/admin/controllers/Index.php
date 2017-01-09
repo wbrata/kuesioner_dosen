@@ -351,6 +351,14 @@ class Index extends MX_Controller {
     function tambah_tt_matkul(){
 
     }
+    function laporan(){
+        $data['dataDosen'] = $this->Gmodel->get('tm_dosen');
+        $data['view'] = 'main_html_admin/content/kuesioner_result';
+        $this->load->view('main_html_admin/content', $data);
+    }
+    function do_dosen($kd_dosen){
+
+    }
     function logout(){
         $this->session->sess_destroy();
         header('location:'.base_url('admin/login'));

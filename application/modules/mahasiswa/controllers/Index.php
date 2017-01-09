@@ -51,6 +51,7 @@ class Index extends MX_Controller {
                                                                                 INNER JOIN tm_dosen ON tm_dosen.kd_dosen = tt_matkul.kd_dosen
                                                                                 INNER JOIN tm_matkul ON tm_matkul.kd_matkul = tt_matkul.kd_matkul
                                                                                 WHERE `kd_tt_matkul` = ".$kd_tt_matkul." ");
+        $data['kd_tt_kelas'] = $kd_tt_kelas;
         $data['view'] = 'main_html/content/pertanyaan';
         $this->load->view('main_html/content', $data);
     }
@@ -58,18 +59,23 @@ class Index extends MX_Controller {
 
     }
     function testReturn(){
-        print_r($this->checkPertanyaan('1', array(1,2,3,4,5), '356a192b7913b04c54574d18c28d46e6395428ab'));
+        print_r($this->checkPertanyaan('1', array('1','2','3','4','5','6'), '77de68daecd823babbb58edb1c8e14d7106e83bb'));
     }
-    function checkPertanyaan($kd_tt_matkul, $data_pertanyaan = null, $kd_mahasiswa_kelas = null){
+    function parsePertanyaan($kd_tt_matkul, $data_pertanyaan = null){
+        return $this->checkPertanyaan($kd_tt_matkul, $data_pertanyaan);;
+    }
+    function checkPertanyaan($kd_tt_matkul, $data_pertanyaan = null){
         // $data['kd_pertanyaan'] = $kd_pertanyaan;
-        $data['kd_mahasiswa_kelas'] = $this->getKdMahasiswa($kd_mahasiswa_kelas);
+        // $data['kd_mahasiswa_kelas'] = $this->getKdMahasiswa($kd_mahasiswa_kelas);
+        $return = null;
         $data['kd_tt_matkul'] = $kd_tt_matkul;
-        $getData = $this->Gmodel->haveIn('kd_pertanyaan', $data_pertanyaan, $data, 'tt_ratin');
+        $getData = $this->Gmodel->haveIn('kd_pertanyaan', $data_pertanyaan, $data, 'tt_rating');
         if($getData->num_rows() > 0){
-            echo "true";
+            $return = "true";
         }else{
-            echo "false";
+            $return = "false";
         }
+        return $return;
     }
     function checkRating($kd_pertanyaan = null, $kd_mahasiswa_kelas = null){
         if($kd_pertanyaan != null && $kd_mahasiswa_kelas != null){

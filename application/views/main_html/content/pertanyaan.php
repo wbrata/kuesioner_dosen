@@ -29,18 +29,21 @@
           <?php if($availPertanyaan->num_rows() > 0){ ?>
           <?php $nomor = 1;?>
             <?php foreach ($availPertanyaan->result_array() as $row) { ?>
-                <tr>
-                  <td><?=$nomor?></td>
-                  <td><?=$row['pertanyaan']?></td>
-                  <td>
-                    <a href="#" class="btn btn-default btn-danger rate" id="buruk" onclick="vote('<?=$dataKelas->row()->kd_tt_matkul?>', '<?=$this->session->userdata("kd_mahasiswa")?>', '1', '<?=$row['kd_pertanyaan']?>', this)">1</a>
-                    <a href="#" class="btn btn-default btn-warning rate" id="lumayan" onclick="vote('<?=$dataKelas->row()->kd_tt_matkul?>', '<?=$this->session->userdata("kd_mahasiswa")?>', '2', '<?=$row['kd_pertanyaan']?>', this)">2</a>
-                    <a href="#" class="btn btn-default rate" id="baik" onclick="vote('<?=$dataKelas->row()->kd_tt_matkul?>', '<?=$this->session->userdata("kd_mahasiswa")?>', '3', '<?=$row['kd_pertanyaan']?>', this)">3</a>
-                    <a href="#" class="btn btn-default btn-success rate" id="cukupbaik" onclick="vote('<?=$dataKelas->row()->kd_tt_matkul?>', '<?=$this->session->userdata("kd_mahasiswa")?>', '4', '<?=$row['kd_pertanyaan']?>', this)">4</a>
-                    <a href="#" class="btn btn-default btn-success rate" id="istimewa" onclick="vote('<?=$dataKelas->row()->kd_tt_matkul?>', '<?=$this->session->userdata("kd_mahasiswa")?>', '5', '<?=$row['kd_pertanyaan']?>', this)">5</a>
-                  </td>
-                </tr>
-                <?php $nomor++; ?>
+                  <?php if(modules::run('mahasiswa/index/checkPertanyaan', $dataKelas->row()->kd_tt_matkul, $row['kd_pertanyaan']) == "false"){ ?>
+                    <tr>
+                      <td><?=$nomor?></td>
+                      <td><?=$row['pertanyaan']?></td>
+                      <td>
+                        <a class="btn btn-default btn-danger rate" id="buruk" onclick="vote('<?=$dataKelas->row()->kd_tt_matkul?>', '<?=$this->session->userdata("kd_mahasiswa")?>', '1', '<?=$row['kd_pertanyaan']?>', this)">1</a>
+                        <a class="btn btn-default btn-warning rate" id="lumayan" onclick="vote('<?=$dataKelas->row()->kd_tt_matkul?>', '<?=$this->session->userdata("kd_mahasiswa")?>', '2', '<?=$row['kd_pertanyaan']?>', this)">2</a>
+                        <a class="btn btn-default rate" id="baik" onclick="vote('<?=$dataKelas->row()->kd_tt_matkul?>', '<?=$this->session->userdata("kd_mahasiswa")?>', '3', '<?=$row['kd_pertanyaan']?>', this)">3</a>
+                        <a class="btn btn-default btn-success rate" id="cukupbaik" onclick="vote('<?=$dataKelas->row()->kd_tt_matkul?>', '<?=$this->session->userdata("kd_mahasiswa")?>', '4', '<?=$row['kd_pertanyaan']?>', this)">4</a>
+                        <a class="btn btn-default btn-success rate" id="istimewa" onclick="vote('<?=$dataKelas->row()->kd_tt_matkul?>', '<?=$this->session->userdata("kd_mahasiswa")?>', '5', '<?=$row['kd_pertanyaan']?>', this)">5</a>
+                      </td>
+                    </tr>
+                    <?php $nomor++; ?>
+                  <?php }else{ ?>
+                  <?php } ?>
                 <?php } ?>
                 <tr>
                   <td>Dosen yang paling disukai</td>
