@@ -42,6 +42,21 @@
                 </tr>
                 <?php $nomor++; ?>
                 <?php } ?>
+                <tr>
+                  <td>Dosen yang paling disukai</td>
+                  <td><textarea name="dosenFav" id="dosenFav"></textarea></td>
+                  <td><a class="btn btn-md btn-success" id="btnDosenFav" onclick="kritikSaran('dosenFav','<?=$dataKelas->row()->kd_tt_matkul?>', this)">SIMPAN</a></td>
+                </tr>
+                <tr>
+                  <td>Kritik dan Saran untuk Dosen</td>
+                  <td><textarea name="kritikSaranDosen" id="kritikSaranDosen"></textarea></td>
+                  <td><a class="btn btn-md btn-success" id="btnKritikSaranDosen" onclick="kritikSaran('KritikSaranDosen','<?=$dataKelas->row()->kd_tt_matkul?>', this)">SIMPAN</a></td>
+                </tr>
+                <tr>
+                  <td>Kritik dan Saran untuk BAK/FO/Security/OB</td>
+                  <td><textarea name="kritikSaranOffice" id="kritikSaranOffice"></textarea></td>
+                  <td><a class="btn btn-md btn-success" id="btnKritikSaranOffice" onclick="kritikSaran('KritikSaranOffice','<?=$dataKelas->row()->kd_tt_matkul?>', this)">SIMPAN</a></td>
+                </tr>
               <?php }else{ ?>
             Anda sudah menjawab semua pertanyaan
           <?php } ?>
@@ -56,6 +71,51 @@
       function vote(kd_tt_matkul, kd_mahasiswa_kelas, nilai, kd_pertanyaan, r){
         var iRow = r.parentNode.parentNode.rowIndex;
         var valueHref = '<?=base_url('mahasiswa/index/giveRating/')?>'+'/'+kd_tt_matkul+'/'+kd_mahasiswa_kelas+'/'+nilai+'/'+kd_pertanyaan;
+        $.ajax({
+            type: 'post',
+            url: valueHref,
+            data: $('#formupdatebiaya').serialize(),
+            success: function (i) {
+              // alert(i);
+              if(i == 'true'){
+                new PNotify({
+                                    title: 'Vote',
+                                    text: 'Voting Success',
+                                    type: 'success',
+                                    hide: true,
+                                    styling: 'bootstrap3'
+                                });
+                document.getElementById("datatable").deleteRow(iRow);
+              }else{
+                new PNotify({
+                                  title: 'Vote',
+                                  text: "Please Try Again",
+                                  type: 'error',
+                                  hide: true,
+                                  styling: 'bootstrap3'
+                              });
+              }
+            }
+          });
+      }
+      function kritikSaran(mode, kd_tt_matkul, r){
+        var iRow = r.parentNode.parentNode.rowIndex;
+        var isi = null;
+        switch(mode){
+          case 'dosenFav' :
+            isi = document.getElementById("dosenFav").value;
+          break;
+          case 'KritikSaranDosen' :
+            isi = document.getElementById("kritikSaranDosen").value
+          break;
+          case 'KritikSaranOffice' :
+            isi = document.getElementById("kritikSaranOffice").value;
+          break;
+          default :
+            isi = "Tidak Ada ISI";
+          break;
+        }
+        var valueHref = '<?=base_url('mahasiswa/index/kritikSaran/')?>'+'/'+mode+'/'+kd_tt_matkul+'/'+isi;
         $.ajax({
             type: 'post',
             url: valueHref,

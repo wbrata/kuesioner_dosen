@@ -107,6 +107,53 @@ class Index extends MX_Controller {
             echo "false";
         }
     }
+    function kritikSaran($mode="dosenFav", $kd_tt_matkul = null, $isi = null){
+        if($kd_tt_matkul != null && $isi !=null){
+            $cekdata['kd_jadwal'] = $kd_tt_matkul;
+            $conditiondata['kd_jadwal'] = $kd_tt_matkul;
+            $data['kd_jadwal'] = $kd_tt_matkul;
+            switch ($mode) {
+                case 'dosenFav':
+                    $data['dosen_favorit'] = $isi;
+                    $updatedata['dosen_favorit'] = $isi;
+                    # code...
+                    break;
+                case 'KritikSaranDosen':
+                    $data['kritiksarandosen'] = $isi;
+                    $updatedata['kritiksarandosen'] = $isi;
+                    # code...
+                    break;
+                case 'KritikSaranOffice':
+                    $data['kritiksaranoffice'] = $isi;
+                    $updatedata['kritiksaranoffice'] = $isi;
+                    # code...
+                    break;
+
+                default:
+                    # code...
+                    $data['dosen_favorit'] = "NO ISI";
+                    break;
+            }
+            $checkData = $this->Gmodel->select($cekdata, 'tt_kritik_saran');
+            if($checkData->num_rows() > 0){
+                $updateData = $this->Gmodel->update($conditiondata, $updatedata, 'tt_kritik_saran');
+                if($updatedata){
+                    echo "true";
+                }else{
+                    echo "false";
+                }
+            }else{
+                $insertData = $this->Gmodel->insert($data, 'tt_kritik_saran');
+                if($insertData){
+                    echo "true";
+                }else{
+                    echo "false";
+                }
+            }
+        }else{
+            echo "false";
+        }
+    }
     function logout(){
         $this->session->sess_destroy();
         header('location:'.base_url('mahasiswa/login'));
