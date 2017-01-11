@@ -76,8 +76,8 @@
     <script>
         $(document).ready(function (){
             $('.right_col').on('mousewheel', function(e) {
-                    e.stopPropagation();                
-            })            
+                    e.stopPropagation();
+            })
         });
     </script>
     <!-- bootstrap-daterangepicker -->
@@ -143,7 +143,7 @@
                 },
               ],
               responsive: true
-            });             
+            });
             $('#tabelLaporanPinjaman').DataTable({
               dom: "Bfrtip",
               buttons: [
@@ -169,149 +169,7 @@
                 },
               ],
               responsive: true
-            });            
+            });
         });
     </script>
     <!-- datatabel.js -->
-       <!-- Flot -->
-    <script>
-      $(document).ready(function() {
-        var monthNames = ["Jan", "Feb", "Mar", "Apr", "May", "Jun",
-                              "Jul", "Aug", "Sept", "Oct", "Nov", "Dec"
-                            ];        
-        var options = {
-            series: {
-                lines:  { show: true,lineWidth: 2,fill: true},
-                points: { show: true,radius: 3,lineWidth: 1},
-                shadowSize: 2
-            },
-            xaxis: {
-                    tickColor: "rgba(51, 51, 51, 0.06)",
-                    mode: "month",
-                    minTickSize: [1, "month"],
-                    tickSize: [1, "month"],
-                    ticks: [
-                            [0, monthNames[0]],
-                            [1, monthNames[1]],
-                            [2, monthNames[2]],
-                            [3, monthNames[3]],
-                            [4, monthNames[4]],
-                            [5, monthNames[5]],
-                            [6, monthNames[6]],
-                            [7, monthNames[7]],
-                            [8, monthNames[8]],
-                            [9, monthNames[9]],
-                            [10, monthNames[10]],
-                            [11, monthNames[11]],
-                            [12, monthNames[12]]
-                            ],
-                    //tickLength: 10,
-                    axisLabel: "Bulan",
-                    axisLabelUseCanvas: true,
-                    axisLabelFontSizePixels: 12,
-                    axisLabelFontFamily: 'Verdana, Arial',
-                    axisLabelPadding: 10
-                  },
-            legend: { show: true}
-        };
-        <?php $m1 = date('m') - 1; ?>
-        <?php $y1 = date('y'); ?>
-        var DATA = [{
-            "label": "Peminjaman",
-                "data": [
-                [<?=$m1?>, <?=modules::run('admin/index/getCountPeminjam', '<?=$y?>', '<?=$m1?>')?>],
-                <?php if($m1=='12'){$m1=01;$y1++;} ?><?php $m1++; ?>
-                [<?=$m1?>, <?=modules::run('admin/index/getCountPeminjam', '<?=$y?>', '<?=$m1?>')?>],
-                <?php if($m1=='12'){$m1=01;$y1++;} ?><?php $m1++; ?>
-                [<?=$m1?>, <?=modules::run('admin/index/getCountPeminjam', '<?=$y?>', '<?=$m1?>')?>],
-                <?php if($m1=='12'){$m1=01;$y1++;} ?><?php $m1++; ?>
-                [<?=$m1?>, <?=modules::run('admin/index/getCountPeminjam', '<?=$y?>', '<?=$m1?>')?>],
-                <?php if($m1=='12'){$m1=01;$y1++;} ?><?php $m1++; ?>
-                [<?=$m1?>, <?=modules::run('admin/index/getCountPeminjam', '<?=$y?>', '<?=$m1?>')?>],
-                <?php if($m1=='12'){$m1=01;$y1++;} ?><?php $m1++; ?>
-                [<?=$m1?>, <?=modules::run('admin/index/getCountPeminjam', '<?=$y?>', '<?=$m1?>')?>],
-                <?php if($m1=='12'){$m1=01;$y1++;} ?><?php $m1++; ?>
-                [<?=$m1?>, <?=modules::run('admin/index/getCountPeminjam', '<?=$y?>', '<?=$m1?>')?>],
-                <?php if($m1=='12'){$m1=01;$y1++;} ?><?php $m1++; ?>
-                [<?=$m1?>, <?=modules::run('admin/index/getCountPeminjam', '<?=$y?>', '<?=$m1?>')?>],
-                <?php if($m1=='12'){$m1=01;$y1++;} ?><?php $m1++; ?>
-                [<?=$m1?>, <?=modules::run('admin/index/getCountPeminjam', '<?=$y?>', '<?=$m1?>')?>],
-                <?php if($m1=='12'){$m1=01;$y1++;} ?><?php $m1++; ?>
-                [<?=$m1?>, <?=modules::run('admin/index/getCountPeminjam', '<?=$y?>', '<?=$m1?>')?>],
-                <?php if($m1=='12'){$m1=01;$y1++;} ?><?php $m1++; ?>
-                [<?=$m1?>, <?=modules::run('admin/index/getCountPeminjam', '<?=$y?>', '<?=$m1?>')?>],
-                <?php if($m1=='12'){$m1=01;$y1++;} ?><?php $m1++; ?>
-                [<?=$m1?>, <?=modules::run('admin/index/getCountPeminjam', '<?=$y?>', '<?=$m1?>')?>]
-            ]
-        }, {
-            "label": "Tabungan",
-                "data": [
-                [<?=date('m')?>, <?=modules::run('admin/index/getCountTabungan', '2016', '01')?>],
-                [<?=date('m') + 1?>, <?=modules::run('admin/index/getCountTabungan', '2016', '02')?>],
-                [<?=date('m') + 2?>, <?=modules::run('admin/index/getCountTabungan', '2016', '03')?>],
-                [<?=date('m') + 3?>, <?=modules::run('admin/index/getCountTabungan', '2016', '04')?>],
-                [<?=date('m') + 4?>, <?=modules::run('admin/index/getCountTabungan', '2016', '05')?>],
-                [<?=date('m') + 5?>, <?=modules::run('admin/index/getCountTabungan', '2016', '06')?>],
-                [<?=date('m') + 6?>, <?=modules::run('admin/index/getCountTabungan', '2016', '07')?>],
-                [<?=date('m') + 7?>, <?=modules::run('admin/index/getCountTabungan', '2016', '08')?>],
-                [<?=date('m') + 8?>, <?=modules::run('admin/index/getCountTabungan', '2016', '09')?>],
-                [<?=date('m') + 9?>, <?=modules::run('admin/index/getCountTabungan', '2016', '10')?>],
-                [<?=date('m') + 10?>, <?=modules::run('admin/index/getCountTabungan', '2016', '11')?>],
-                [<?=date('m') + 11?>, <?=modules::run('admin/index/getCountTabungan', '2016', '12')?>]
-            ]
-        }];       
-
-        var DK = [{
-            "label": "Debit",
-                "data": [
-                [<?=date('m')?>, <?=modules::run('admin/index/getCountJurnal', 'debet', '2016', '01')?>],
-                [<?=date('m') + 1?>, <?=modules::run('admin/index/getCountJurnal', 'debet', '2016', '02')?>],
-                [<?=date('m') + 2?>, <?=modules::run('admin/index/getCountJurnal', 'debet', '2016', '03')?>],
-                [<?=date('m') + 3?>, <?=modules::run('admin/index/getCountJurnal', 'debet', '2016', '04')?>],
-                [<?=date('m') + 4?>, <?=modules::run('admin/index/getCountJurnal', 'debet', '2016', '05')?>],
-                [<?=date('m') + 5?>, <?=modules::run('admin/index/getCountJurnal', 'debet', '2016', '06')?>],
-                [<?=date('m') + 6?>, <?=modules::run('admin/index/getCountJurnal', 'debet', '2016', '07')?>],
-                [<?=date('m') + 7?>, <?=modules::run('admin/index/getCountJurnal', 'debet', '2016', '08')?>],
-                [<?=date('m') + 8?>, <?=modules::run('admin/index/getCountJurnal', 'debet', '2016', '09')?>],
-                [<?=date('m') + 9?>, <?=modules::run('admin/index/getCountJurnal', 'debet', '2016', '10')?>],
-                [<?=date('m') + 10?>, <?=modules::run('admin/index/getCountJurnal', 'debet', '2016', '11')?>],
-                [<?=date('m') + 11?>, <?=modules::run('admin/index/getCountJurnal', 'debet', '2016', '12')?>]
-            ]
-        }, {
-            "label": "Kredit",
-                "data": [
-                [<?=date('m')?>, <?=modules::run('admin/index/getCountJurnal', 'kredit', '2016', '01')?>],
-                [<?=date('m') + 1?>, <?=modules::run('admin/index/getCountJurnal', 'kredit', '2016', '02')?>],
-                [<?=date('m') + 2?>, <?=modules::run('admin/index/getCountJurnal', 'kredit', '2016', '03')?>],
-                [<?=date('m') + 3?>, <?=modules::run('admin/index/getCountJurnal', 'kredit', '2016', '04')?>],
-                [<?=date('m') + 4?>, <?=modules::run('admin/index/getCountJurnal', 'kredit', '2016', '05')?>],
-                [<?=date('m') + 5?>, <?=modules::run('admin/index/getCountJurnal', 'kredit', '2016', '06')?>],
-                [<?=date('m') + 6?>, <?=modules::run('admin/index/getCountJurnal', 'kredit', '2016', '07')?>],
-                [<?=date('m') + 7?>, <?=modules::run('admin/index/getCountJurnal', 'kredit', '2016', '08')?>],
-                [<?=date('m') + 8?>, <?=modules::run('admin/index/getCountJurnal', 'kredit', '2016', '09')?>],
-                [<?=date('m') + 9?>, <?=modules::run('admin/index/getCountJurnal', 'kredit', '2016', '10')?>],
-                [<?=date('m') + 10?>, <?=modules::run('admin/index/getCountJurnal', 'kredit', '2016', '11')?>],
-                [<?=date('m') + 11?>, <?=modules::run('admin/index/getCountJurnal', 'kredit', '2016', '12')?>]
-            ]
-        }, {
-            "label": "Saldo",
-                "data": [
-                [<?=date('m')?>, <?=modules::run('admin/index/getSaldo', '2016', '01')?>],
-                [<?=date('m') + 1?>, <?=modules::run('admin/index/getSaldo', '2016', '02')?>],
-                [<?=date('m') + 2?>, <?=modules::run('admin/index/getSaldo', '2016', '03')?>],
-                [<?=date('m') + 3?>, <?=modules::run('admin/index/getSaldo', '2016', '04')?>],
-                [<?=date('m') + 4?>, <?=modules::run('admin/index/getSaldo', '2016', '05')?>],
-                [<?=date('m') + 5?>, <?=modules::run('admin/index/getSaldo', '2016', '06')?>],
-                [<?=date('m') + 6?>, <?=modules::run('admin/index/getSaldo', '2016', '07')?>],
-                [<?=date('m') + 7?>, <?=modules::run('admin/index/getSaldo', '2016', '08')?>],
-                [<?=date('m') + 8?>, <?=modules::run('admin/index/getSaldo', '2016', '09')?>],
-                [<?=date('m') + 9?>, <?=modules::run('admin/index/getSaldo', '2016', '10')?>],
-                [<?=date('m') + 10?>, <?=modules::run('admin/index/getSaldo', '2016', '11')?>],
-                [<?=date('m') + 11?>, <?=modules::run('admin/index/getSaldo', '2016', '12')?>]
-            ]
-        }];        
-        var plot = $.plot("#canvas_dahs", DATA, options);
-        var plotdk = $.plot("#canvas_dk", DK, options);
-      });
-    </script>
-    <!-- /Flot -->

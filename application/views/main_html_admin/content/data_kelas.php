@@ -25,9 +25,10 @@
                   <td><?=$row['kd_kelas']?></td>
                   <td><?=$row['nama_kelas']?></td>
                   <td>
-                    <a href="#" class="btn btn-sm btn-success" data-toggle="modal" data-target=".bs-update-modal-md" onclick="showDialogUpdate('<?=$row['kd_kelas']?>', this)">Ubah</a>
-                    <a href="#" class="btn btn-sm btn-danger"  data-toggle="modal" data-target=".bs-delete-modal-sm"  onclick="showDialogDelete('<?=sha1($row['kd_kelas'])?>', this)">Hapus</a>
-                    <a href="#" class="btn btn-sm btn-success" >Tambah Mahasiswa</a>
+                    <a class="btn btn-sm btn-success" data-toggle="modal" data-target=".bs-update-modal-md" onclick="showDialogUpdate('<?=$row['kd_kelas']?>', this)">Ubah</a>
+                    <a class="btn btn-sm btn-danger"  data-toggle="modal" data-target=".bs-delete-modal-sm"  onclick="showDialogDelete('<?=sha1($row['kd_kelas'])?>', this)">Hapus</a>
+                    <a class="btn btn-sm btn-success"  data-toggle="modal" data-target=".bs-list-modal-lg" onclick="showDIalogDetailMahasiswa('<?=$row['kd_kelas']?>')">Daftar Mahasiswa</a>
+                    <a class="btn btn-sm btn-success"  data-toggle="modal" data-target=".bs-add-modal-lg" onclick="showDIalogTambahMahasiswa('<?=$row['kd_kelas']?>')">Tambah Mahasiswa</a>
                   </td>
                 </tr>
                 <?php $nomor++; ?>
@@ -68,6 +69,60 @@
       </div>
     </div>
     <!-- /modals create-->
+    <!-- modals add -->
+    <div class="modal fade bs-add-modal-lg" id="modaladd" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+
+        <form id="formaddmahasiswa" data-parsley-validate class="form-horizontal form-label-left" method="POST" action="#">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel2">Tambah Data Kelas</h4>
+          </div>
+          <div class="modal-body">
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-3" for="first-name">Nama Mahasiswa <span class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <input type="hidden" id="kd_add" required="required" class="form-control col-md-7 col-xs-12" name="kd_add">
+                  <select class="select_single form-control" tabindex="-1" name="mahasiswadd" id="mahasiswadd">
+                    <option></option>
+                    <?php foreach ($dataMahasiswa->result_array() as $rowMahasiswa) { ?>
+                      <option value="<?=$rowMahasiswa['kd_mahasiswa']?>"><?=$rowMahasiswa['nim']?>-<?=$rowMahasiswa['nama']?></option>
+                    <?php } ?>
+                  </select>
+                </div>
+              </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Batal</button>
+            <button type="submit" class="btn btn-primary" id="save">Simpan Perubahan</button>
+          </div>
+        </form>
+        </div>
+      </div>
+    </div>
+    <!-- /modals add-->
+    <!-- modals list -->
+    <div class="modal fade bs-list-modal-lg" id="modallist" tabindex="-1" role="dialog" aria-hidden="true">
+      <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
+            </button>
+            <h4 class="modal-title" id="myModalLabel2">List Mahasiswa</h4>
+          </div>
+          <div class="modal-body" id="contentMhs">
+
+          </div>
+          <div class="modal-footer">
+            <button type="submit" class="btn btn-primary" data-dismiss="modal">Tutup</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- /modals list-->
     <!-- modals update -->
     <div class="modal fade bs-update-modal-md" id="modalUpdate" tabindex="-1" role="dialog" aria-hidden="true">
       <div class="modal-dialog modal-lg">
@@ -123,6 +178,31 @@
     <!-- jQuery -->
     <script src="<?=base_url()?>assets/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript">
+    function showDIalogDetailMahasiswa(id){
+          $.ajax({
+            type: 'post',
+            url: '<?=base_url('admin/index/detailMahasiswaKelas')?>/'+id,
+            data: $('form').serialize(),
+            success: function (i) {
+              document.getElementById("contentMhs").innerHTML=i;
+            }
+          });
+    }
+      function showDIalogTambahMahasiswa(id){
+          // var iRow = r.parentNode.parentNode.rowIndex;
+          $.ajax({
+            type: 'post',
+            url: '<?=base_url('admin/index/post_get/kelas')?>/'+id,
+            data: $('form').serialize(),
+            success: function (i) {
+              var jsonObjectParse = JSON.parse(i);
+              var jsonObjectStringify = JSON.stringify(jsonObjectParse);
+              var jsonObjectFinal = JSON.parse(jsonObjectStringify);
+              // document.getElementById("row_add").value=iRow;
+              document.getElementById("kd_add").value=jsonObjectFinal.kd_kelas;
+            }
+          });
+      }
       function showDialogDelete(id, r){
           var i = r.parentNode.parentNode.rowIndex;
           document.getElementById("yDel").href=id+"beni"+i;
@@ -147,6 +227,10 @@
         document.getElementById("row_create").value=row;
       }
       $(document).ready(function(){
+        $(".select_single").select2({
+          placeholder: "Pilih Mahasiswa",
+          allowClear: true
+        });
         $('#formcreatematkul').on('submit', function(e){
           var table = document.getElementById('datatable');
           var rowCreate = document.getElementById('row_create').value;
@@ -211,6 +295,34 @@
                 new PNotify({
                                   title: 'Update Failed',
                                   text: i,
+                                  type: 'error',
+                                  hide: true,
+                                  styling: 'bootstrap3'
+                              });
+              }
+            }
+          });
+        });
+        $("#formaddmahasiswa").on('submit', function(e){
+          e.preventDefault();
+          $.ajax({
+            type: 'post',
+            url: '<?=base_url('admin/index/addMahasiswaKelas')?>',
+            data: $('#formaddmahasiswa').serialize(),
+            success: function (i) {
+              if(i == 'true'){
+                new PNotify({
+                                    title: 'Add Success',
+                                    text: 'Tambah Data Mahasiswa Sukses',
+                                    type: 'success',
+                                    hide: true,
+                                    styling: 'bootstrap3'
+                                });
+                $('#modaladd').modal('hide');
+              }else{
+                new PNotify({
+                                  title: 'Add Failed',
+                                  text: 'Tambah Mahasiswa Gagal',
                                   type: 'error',
                                   hide: true,
                                   styling: 'bootstrap3'

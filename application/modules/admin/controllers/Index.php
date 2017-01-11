@@ -227,8 +227,38 @@ class Index extends MX_Controller {
     }
     function kelas(){
         $data['dataKelas'] = $this->Gmodel->get("tm_kelas");
+        $data['dataMahasiswa'] = $this->Gmodel->get("tm_mahasiswa");
         $data['view'] = 'main_html_admin/content/data_kelas';
         $this->load->view('main_html_admin/content', $data);
+    }
+    function addMahasiswaKelas(){
+        $params = $this->input->post();
+        if($params != null){
+            $data['kd_kelas'] = $params['kd_add'];
+            $data['kd_mahasiswa'] = $params['mahasiswadd'];
+            $check = $this->Gmodel->select($data, 'tt_kelas');
+            if($check->num_rows() < 1){
+                $insert = $this->Gmodel->insert($data, 'tt_kelas');
+                if($insert){
+                    echo "true";
+                }else{
+                    echo "false";
+                }
+            }else{
+                echo "false";
+            }
+        }
+    }
+    function detailMahasiswaKelas($kd_kelas = null){
+        if($kd_kelas != null){
+            $query = $this->Gmodel->rawQuery("select * from tt_kelas
+                                                                        inner join tm_mahasiswa on tm_mahasiswa.kd_mahasiswa = tt_kelas.kd_mahasiswa
+                                                                        inner join tm_kelas on tm_kelas.kd_kelas = tt_kelas.kd_kelas
+                                                                        where tt_kelas.kd_kelas = '".$kd_kelas."'");
+            $data['query'] = $query;
+            $data['kelas'] = $query->row()->nama_kelas;
+            $this->load->view('main_html_admin/content/data_mahasiswa_kelas', $data);
+        }
     }
     function post_kelas($type = 'create', $kode=0){
         $params = $this->input->post();
