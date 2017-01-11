@@ -404,6 +404,16 @@ class Index extends MX_Controller {
                                                                                                 group by tt_kelas.kd_mahasiswa");
         $this->load->view('main_html_admin/content/detail_matkul_result', $data);
     }
+    function kritiksaran(){
+        $data['dataKritik'] = $this->Gmodel->rawQuery("select * from tt_kritik_saran
+                                                                                    inner join tm_mahasiswa on tm_mahasiswa.kd_mahasiswa = tt_kritik_saran.kd_mahasiswa
+                                                                                    inner join tt_kelas on tt_kelas.kd_tt_kelas = tt_kritik_saran.kd_jadwal
+                                                                                    inner join tt_jadwal on tt_jadwal.kd_tt_kelas = tt_kelas.kd_tt_kelas
+                                                                                    inner join tt_matkul on tt_matkul.kd_tt_matkul = tt_jadwal.kd_tt_matkul
+                                                                                    inner join tm_dosen on tm_dosen.kd_dosen = tt_matkul.kd_dosen");
+        $data['view'] = 'main_html_admin/content/data_kritik_saran';
+        $this->load->view('main_html_admin/content', $data);
+    }
     function logout(){
         $this->session->sess_destroy();
         header('location:'.base_url('admin/login'));

@@ -118,6 +118,7 @@ class Index extends MX_Controller {
             $cekdata['kd_jadwal'] = $kd_tt_matkul;
             $conditiondata['kd_jadwal'] = $kd_tt_matkul;
             $data['kd_jadwal'] = $kd_tt_matkul;
+            $data['kd_mahasiswa'] = $this->getKdMahasiswa($this->session->userdata('kd_mahasiswa'));
             switch ($mode) {
                 case 'dosenFav':
                     $data['dosen_favorit'] = $isi;
