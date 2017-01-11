@@ -354,6 +354,10 @@ class Index extends MX_Controller {
     function jadwal_kelas($kd_kelas = null){
         // code of jadwal kelas
         if ($kd_kelas != null) {
+            $data['kd_kelas'] = $kd_kelas;
+            $data['tt_matkul'] = $this->Gmodel->rawQuery('select * from tt_matkul
+                                                                                        inner join tm_dosen on tm_dosen.kd_dosen = tt_matkul.kd_dosen
+                                                                                        inner join tm_matkul on tm_matkul.kd_matkul = tt_matkul.kd_matkul');
             $data['tahun_ajaran'] = $this->Gmodel->rawQuery("SELECT * FROM tt_jadwal
                                                                                                                 INNER JOIN tt_kelas ON tt_kelas.kd_tt_kelas = tt_jadwal.kd_tt_kelas
                                                                                                                 INNER JOIN tt_matkul ON tt_matkul.kd_tt_matkul = tt_jadwal.kd_tt_matkul
@@ -363,6 +367,27 @@ class Index extends MX_Controller {
                                                                                                                 GROUP BY tt_matkul.tahun_ajaran");
             $data['view'] = 'main_html_admin/content/tahun_ajaran_kelas';
             $this->load->view('main_html_admin/content', $data);
+        }
+    }
+    function addMatkulKelas(){
+        $params = $this->input->post();
+        if($params != null){
+            $dataKelas['sha1(kd_kelas)'] = $params['kode_kelas'];
+            $getDataKelas = $this->Gmodel->select($dataKelas, 'tm_kelas');
+
+            $data['kd_tt_kelas'] = $getDataKelas->row()->kd_kelas;
+            $data['kd_tt_matkul'] = $params['matkuladd'];
+            $checkData = $this->Gmodel->select($data, 'tt_jadwal');
+            if($checkData->num_rows() < 1){
+                $insert = $this->Gmodel->insert($data, 'tt_jadwal');
+                if($insert){
+                    echo "true";
+                }else{
+                    echo "false";
+                }
+            }else{
+                echo "false";
+            }
         }
     }
     function detail_matkul($kd_kelas = null, $tahun_ajaran = null){

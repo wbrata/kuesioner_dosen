@@ -55,6 +55,9 @@
                   <li>
                     <a href="<?=base_url('admin/index/laporan')?>"><i class="fa fa-bar-chart"></i> Data Vote Matkul</a>
                   </li>
+                  <li>
+                    <a href="<?=base_url('admin/index/kritiksaran')?>"><i class="fa fa-comments-o"></i> Data Kritik dan Saran</a>
+                  </li>
                 </ul>
               </div>
             </div>
