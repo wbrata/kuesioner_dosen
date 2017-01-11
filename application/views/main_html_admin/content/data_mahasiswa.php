@@ -42,18 +42,27 @@
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
 
-        <form id="formcreatematkul" data-parsley-validate class="form-horizontal form-label-left" method="POST" action="#">
+        <form id="formcreatemahasiswa" data-parsley-validate class="form-horizontal form-label-left" method="POST" action="#">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
             </button>
-            <h4 class="modal-title" id="myModalLabel2">Tambah Data Matkul</h4>
+            <h4 class="modal-title" id="myModalLabel2">Tambah Data Mahasiswa</h4>
+          </div>
+          <div class="modal-body">
+              <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">NIM <span class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <input type="text" id="nim_create" required="required" class="form-control col-md-7 col-xs-12" name="nim_mahasiswa">
+                </div>
+              </div>
           </div>
           <div class="modal-body">
               <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Nama <span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input type="text" id="nama_create" required="required" class="form-control col-md-7 col-xs-12" name="nama_matkul">
+                  <input type="text" id="nama_create" required="required" class="form-control col-md-7 col-xs-12" name="nama_mahasiswa">
                   <input type="hidden" id="row_create" required="required" class="form-control col-md-7 col-xs-12" name="row">
                 </div>
               </div>
@@ -72,7 +81,7 @@
       <div class="modal-dialog modal-lg">
         <div class="modal-content">
 
-        <form id="formupdatematkul" data-parsley-validate class="form-horizontal form-label-left" method="POST" action="#">
+        <form id="formupdatemahasiswa" data-parsley-validate class="form-horizontal form-label-left" method="POST" action="#">
           <div class="modal-header">
             <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span>
             </button>
@@ -81,11 +90,18 @@
           <div class="modal-body">
 
               <div class="form-group">
+                <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">NIM <span class="required">*</span>
+                </label>
+                <div class="col-md-6 col-sm-6 col-xs-12">
+                  <input type="text" id="nim" required="required" class="form-control col-md-7 col-xs-12" name="nim_mahasiswa">
+                </div>
+              </div>
+              <div class="form-group">
                 <label class="control-label col-md-3 col-sm-3 col-xs-12" for="first-name">Nama <span class="required">*</span>
                 </label>
                 <div class="col-md-6 col-sm-6 col-xs-12">
-                  <input type="text" id="nama" required="required" class="form-control col-md-7 col-xs-12" name="nama_matkul">
-                  <input type="hidden" id="kd" required="required" class="form-control col-md-7 col-xs-12" name="kode_matkul">
+                  <input type="text" id="nama" required="required" class="form-control col-md-7 col-xs-12" name="nama_mahasiswa">
+                  <input type="hidden" id="kd" required="required" class="form-control col-md-7 col-xs-12" name="kode_mahasiswa">
                   <input type="hidden" id="row" required="required" class="form-control col-md-7 col-xs-12" name="row">
                 </div>
               </div>
@@ -118,32 +134,33 @@
         </div>
       </div>
     </div>
-    <!-- /modals hapus -->    
+    <!-- /modals hapus -->
     <!-- jQuery -->
     <script src="<?=base_url()?>assets/jquery/dist/jquery.min.js"></script>
     <script type="text/javascript">
       function showDialogDelete(id, r){
           var i = r.parentNode.parentNode.rowIndex;
-          document.getElementById("yDel").href=id+"beni"+i; 
-      }    
+          document.getElementById("yDel").href=id+"beni"+i;
+      }
       function showDialogUpdate(id, r){
           var iRow = r.parentNode.parentNode.rowIndex;
           $.ajax({
             type: 'post',
-            url: '<?=base_url('admin/index/post_get/matkul')?>/'+id,
+            url: '<?=base_url('admin/index/post_get/mahasiswa')?>/'+id,
             data: $('form').serialize(),
             success: function (i) {
               var jsonObjectParse = JSON.parse(i);
               var jsonObjectStringify = JSON.stringify(jsonObjectParse);
               var jsonObjectFinal = JSON.parse(jsonObjectStringify);
               document.getElementById("row").value=iRow;
-              document.getElementById("kd").value=jsonObjectFinal.kode_matkul; 
-              document.getElementById("nama").value=jsonObjectFinal.matkul; 
-            }    
-          });        
+              document.getElementById("kd").value=jsonObjectFinal.kode_mahasiswa;
+              document.getElementById("nama").value=jsonObjectFinal.nama_mahasiswa;
+              document.getElementById("nim").value=jsonObjectFinal.nim_mahasiswa;
+            }
+          });
       }
       function showCreateDialog(row){
-        document.getElementById("row_create").value=row; 
+        document.getElementById("row_create").value=row;
       }
       function vote(kd_tt_matkul, kd_mahasiswa_kelas, nilai, r){
         var iRow = r.parentNode.parentNode.rowIndex;
@@ -172,19 +189,20 @@
                                   styling: 'bootstrap3'
                               });
               }
-            }    
-          }); 
+            }
+          });
       }
       $(document).ready(function(){
-        $('#formcreatematkul').on('submit', function(e){
+        $('#formcreatemahasiswa').on('submit', function(e){
           var table = document.getElementById('datatable');
           var rowCreate = document.getElementById('row_create').value;
           var nameCreate = document.getElementById('nama_create').value;
+          var nimCreate = document.getElementById('nim_create').value;
           e.preventDefault();
           $.ajax({
             type: 'post',
-            url: '<?=base_url('admin/index/post_matkul/create')?>',
-            data: $('#formcreatematkul').serialize(),
+            url: '<?=base_url('admin/index/post_mahasiswa/create')?>',
+            data: $('#formcreatemahasiswa').serialize(),
             success: function (i) {
               if(i == 'true'){
                 var row = table.insertRow(1);
@@ -192,9 +210,9 @@
                 var cellId = row.insertCell(1);
                 var cellName = row.insertCell(2);
                 var cellAksi = row.insertCell(3);
-                cellNumber.innerHTML = rowCreate + 1;
+                cellNumber.innerHTML = parseInt(rowCreate) + parseInt(1);
                 cellAksi.innerHTML = '';
-                cellId.innerHTML = rowCreate + 1;
+                cellId.innerHTML = nimCreate;
                 cellName.innerHTML = nameCreate;
                 new PNotify({
                                     title: 'Create Success',
@@ -213,21 +231,22 @@
                                   styling: 'bootstrap3'
                               });
               }
-            }    
-          });           
+            }
+          });
         });
-        $('#formupdatematkul').on('submit', function(e){
-          var table = document.getElementById("datatable") 
+        $('#formupdatemahasiswa').on('submit', function(e){
+          var table = document.getElementById("datatable")
           var rowVal = document.getElementById('row').value;
           var row = table.rows[rowVal];
           e.preventDefault();
           $.ajax({
             type: 'post',
-            url: '<?=base_url('admin/index/post_matkul/update')?>',
-            data: $('#formupdatematkul').serialize(),
+            url: '<?=base_url('admin/index/post_mahasiswa/update')?>',
+            data: $('#formupdatemahasiswa').serialize(),
             success: function (i) {
               if(i == 'true'){
                 row.cells[2].innerHTML = document.getElementById("nama").value;
+                row.cells[1].innerHTML = document.getElementById("nim").value;
                 new PNotify({
                                     title: 'Update Success',
                                     text: 'Update Data Success',
@@ -245,8 +264,8 @@
                                   styling: 'bootstrap3'
                               });
               }
-            }    
-          });          
+            }
+          });
         });
         $('#yDel').on('click', function(e){
           var value = document.getElementById("yDel").getAttribute("href");
@@ -277,8 +296,8 @@
                                   styling: 'bootstrap3'
                               });
               }
-            }    
+            }
           });
-        });        
-      });      
-    </script>            
+        });
+      });
+    </script>
