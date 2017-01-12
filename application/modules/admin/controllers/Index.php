@@ -371,23 +371,34 @@ class Index extends MX_Controller {
     }
     function addMatkulKelas(){
         $params = $this->input->post();
+        $return = null;
         if($params != null){
-            $dataKelas['sha1(kd_kelas)'] = $params['kode_kelas'];
-            $getDataKelas = $this->Gmodel->select($dataKelas, 'tm_kelas');
+            // $dataKelas['sha1(kd_kelas)'] = $params['kode_kelas'];
+            // $getDataKelas = $this->Gmodel->select($dataKelas, 'tm_kelas');
 
-            $data['kd_tt_kelas'] = $getDataKelas->row()->kd_kelas;
-            $data['kd_tt_matkul'] = $params['matkuladd'];
-            $checkData = $this->Gmodel->select($data, 'tt_jadwal');
-            if($checkData->num_rows() < 1){
-                $insert = $this->Gmodel->insert($data, 'tt_jadwal');
-                if($insert){
-                    echo "true";
-                }else{
-                    echo "false";
+            $dataKelas['sha1(kd_kelas)'] = $params['kode_kelas'];
+            $getDataKelas = $this->Gmodel->select($dataKelas, 'tt_kelas');
+            if ($getDataKelas->num_rows() > 0) {
+                foreach ($getDataKelas->result_array() as $rowDataKelas) {
+                    // $data['kd_tt_kelas'] = $getDataKelas->row()->kd_kelas;
+                    $data['kd_tt_kelas'] = $rowDataKelas['kd_tt_kelas'];
+                    $data['kd_tt_matkul'] = $params['matkuladd'];
+                    $checkData = $this->Gmodel->select($data, 'tt_jadwal');
+                    if($checkData->num_rows() < 1){
+                        $insert = $this->Gmodel->insert($data, 'tt_jadwal');
+                        if($insert){
+                            $return = "true";
+                        }else{
+                            $return = "false";
+                        }
+                    }else{
+                        $return = "false";
+                    }
                 }
             }else{
-                echo "false";
+                $return = "false";
             }
+            echo $return;
         }
     }
     function detail_matkul($kd_kelas = null, $tahun_ajaran = null){
@@ -399,7 +410,8 @@ class Index extends MX_Controller {
                                                                                             LEFT JOIN tm_kelas ON tm_kelas.kd_kelas = tt_kelas.kd_kelas
                                                                                             LEFT JOIN tm_matkul ON tm_matkul.kd_matkul = tt_matkul.kd_matkul
                                                                                             WHERE sha1(tm_kelas.kd_kelas) = '".$kd_kelas."'
-                                                                                            AND sha1(tt_matkul.tahun_ajaran) = '".$tahun_ajaran."'");
+                                                                                            AND sha1(tt_matkul.tahun_ajaran) = '".$tahun_ajaran."'
+                                                                                            GROUP BY tt_jadwal.kd_tt_matkul");
             $this->load->view('main_html_admin/content/detail_matkul', $data);
         }
     }
